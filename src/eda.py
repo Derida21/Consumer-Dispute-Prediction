@@ -16,11 +16,10 @@ def run():
     @st.cache_data
     def load_data():
         base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        try:
+        if not os.path.exists(os.path.join(base_dir, 'modeling', file_name)):
             with zipfile.ZipFile(os.path.join(base_dir, 'modeling', zip_name), 'r') as zip_ref:
                         zip_ref.extractall(os.path.join(base_dir, 'modeling'))
-        except:
-                st.write("Error extracting the zip file. Please ensure the zip file exists and is not corrupted.")
+
         return pd.read_csv(os.path.join(base_dir,'modeling/consumer_complaints.csv'))
 
     df = load_data()
