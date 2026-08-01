@@ -2,10 +2,6 @@ import streamlit as st
 import pandas as pd
 import joblib
 import os
-import zipfile
-
-zip_name = "archive.zip"
-file_name = "consumer_complaints.csv"
 
 def run():
     st.title("🔮 Complaint Dispute Prediction")
@@ -20,12 +16,6 @@ def run():
     @st.cache_data
     def load_data():
         base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        try:
-            with zipfile.ZipFile(os.path.join(base_dir, 'modeling', zip_name), 'r') as zip_ref:
-                        zip_ref.extractall(os.path.join(base_dir, 'modeling'))
-        except:
-             st.write("Error extracting the zip file. Please ensure the zip file exists and is not corrupted.")
-             
         return pd.read_csv(os.path.join(base_dir,'modeling/consumer_complaints.csv'))
     
     df = load_data()
